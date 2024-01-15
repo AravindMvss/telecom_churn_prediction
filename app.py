@@ -116,21 +116,26 @@ with col2:
 
 # Perform different actions based on the selected value
 
-if st.button("Predict"):
-    columns = ['gender', 'SeniorCitizen', 'Partner', 'Dependents',
-       'tenure', 'PhoneService', 'MultipleLines', 'InternetService',
-       'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport',
-       'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling',
-       'PaymentMethod', 'MonthlyCharges', 'TotalCharges']
-    df = pd.DataFrame([[gender,senior_citizen,partner,dependents,tenure,phoneservice
+all_fields = [gender,senior_citizen,partner,dependents,tenure,phoneservice
                        ,multiplelines,internetservice,onlinesecurity,onlinebackup,
                        deviceprotecttion,techsupport,streamingtv,streamingmovies,
-                       contract,paperlessbilling,paymentmethod,monthlycharges,totalcharges]]
-                      ,columns=columns)
-    st.write("Recieved Input:")
-    st.dataframe(df,hide_index=True)
-    result = predict_churn(df)
-    if result:
-        st.write("The Customer will Churn")
+                       contract,paperlessbilling,paymentmethod,monthlycharges,totalcharges]
+
+if st.button("Predict"):
+    if all(all_fields):
+        columns = ['gender', 'SeniorCitizen', 'Partner', 'Dependents',
+        'tenure', 'PhoneService', 'MultipleLines', 'InternetService',
+        'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport',
+        'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling',
+        'PaymentMethod', 'MonthlyCharges', 'TotalCharges']
+        df = pd.DataFrame([all_fields]
+                        ,columns=columns)
+        st.write("Recieved Input:")
+        st.dataframe(df,hide_index=True)
+        result = predict_churn(df)
+        if result:
+            st.write("The Customer will Churn")
+        else:
+            st.write("The Customer will not Churn")
     else:
-        st.write("The Customer will not Churn")
+        st.error("Enter all the Fields")
