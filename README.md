@@ -1,1 +1,1 @@
-Telecom churn prediction uasing ANN
+Telecom churn prediction using ANN
